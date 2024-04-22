@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .controller {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px;
+      width: 8%;
+    }
+    .controller i {
+      font-size: 30px;
+      cursor: pointer;
+
+    }
+    #image-container {
+      position: relative;
+      display: inline-block;
+    }
+    #car {
+      width: 200px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: top 0.3s, left 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Use the controllers or arrow keys to move the car:</h2>
+<div id="container">
+    <div id="image-container">
+        <img id="car" src="right.png" alt="Car">
+      </div>
+
+  <div class="controller" id="left-btn">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  <div class="controller" id="up-btn">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+  <div class="controller" id="down-btn">
+    <i class="fas fa-arrow-down"></i>
+  </div>
+  <div class="controller" id="right-btn">
+    <i class="fas fa-arrow-right"></i>
+  </div>
+  <br>
+ 
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+  var car = $("#car");
+  var movement = 80; // Adjust this value to control the speed of movement
+  var images = ["up.png", "down.png", "left.png", "right.png"]; // Array of image URLs
+
+  function moveLeft() {
+    var currentPosition = parseInt(car.css("left"));
+    car.css("left", currentPosition - movement);
+    changeCarImage(2); // Change to the left-facing car image
+  }
+
+  function moveRight() {
+    var currentPosition = parseInt(car.css("left"));
+    car.css("left", currentPosition + movement);
+    changeCarImage(3); // Change to the right-facing car image
+  }
+
+  function moveUp() {
+    var currentPosition = parseInt(car.css("top"));
+    car.css("top", currentPosition - movement);
+    changeCarImage(0); // Change to the upward-facing car image
+  }
+
+  function moveDown() {
+    var currentPosition = parseInt(car.css("top"));
+    car.css("top", currentPosition + movement);
+    changeCarImage(1); // Change to the downward-facing car image
+  }
+
+  function changeCarImage(index) {
+    car.attr("src", images[index]);
+  }
+
+  $("#left-btn").click(moveLeft);
+  $("#right-btn").click(moveRight);
+  $("#up-btn").click(moveUp);
+  $("#down-btn").click(moveDown);
+
+  $(document).keydown(function(e) {
+    if (e.keyCode == 37) { // Left arrow key
+      moveLeft();
+    } else if (e.keyCode == 39) { // Right arrow key
+      moveRight();
+    } else if (e.keyCode == 38) { // Up arrow key
+      moveUp();
+    } else if (e.keyCode == 40) { // Down arrow key
+      moveDown();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
